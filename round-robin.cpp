@@ -1,5 +1,8 @@
-
 #include <stdio.h>
+
+int min(int a, int b) {
+    return (a < b) ? a : b;
+}
 
 void lerProcessoTempoExecucao(int processoTemposExecucao[], int n) {
     for (int i = 0; i < n; i++) {
@@ -17,7 +20,7 @@ void executarRoundRobin(int processoTemposExecucao[], int n, int quantum) {
 
     while (processosRestantes > 0) {
         if (processoTemposExecucao[i] > 0) {
-            int tempoExecucao = (processoTemposExecucao[i] >= quantum) ? quantum : processoTemposExecucao[i];
+            int tempoExecucao = min(processoTemposExecucao[i], quantum);
             int tempoInicio = tempoAnterior;
             int tempoFim = tempoAnterior + tempoExecucao;
 
