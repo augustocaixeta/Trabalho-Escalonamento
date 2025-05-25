@@ -51,6 +51,16 @@ void executarRoundRobin(int processoTemposExecucao[], int n, int quantum) {
 
     while (processosRestantes > 0) {
         if (processoTemposExecucao[i] > 0) {
+            /**
+             * A função "min(a, b)" garante que o processo execute no máximo o tempo definido pelo quantum,
+             * ou menos, se tiver menos tempo restante. Por exemplo:
+             *
+             *     quantum = 3
+             *     processoTemposExecucao[i] = 4
+             *
+             * Neste caso, a função "min(4, 3)" retorna 3, limitando o tempo de execução.
+             * Isso evita que o processo ultrapasse seu tempo restante ou o quantum.
+             */
             int tempoExecucao = min(processoTemposExecucao[i], quantum);
             int tempoInicio = tempoAnterior;
             int tempoFim = tempoAnterior + tempoExecucao;
@@ -69,6 +79,21 @@ void executarRoundRobin(int processoTemposExecucao[], int n, int quantum) {
             }
         }
 
+        /**
+         * Passo a passo de como o índice do rodízio se comporta, supondo n = 3, onde i = (i + 1) % n:
+         *
+         *                          = 0 (O índice "i" atualmente já é "0" e foi executado.)
+         * 0 = (0 + 1) % 3 => 1 % 3 = 1
+         * 1 = (1 + 1) % 3 => 2 % 3 = 2
+         *
+         * 2 = (2 + 1) % 3 => 3 % 3 = 0
+         * 3 = (3 + 1) % 3 => 4 % 3 = 1
+         * 4 = (4 + 1) % 3 => 5 % 3 = 2
+         *
+         * 5 = (5 + 1) % 3 => 6 % 3 = 0
+         * 6 = (6 + 1) % 3 => 7 % 3 = 1
+         * ...
+         */
         i = (i + 1) % n;
     }
 }
