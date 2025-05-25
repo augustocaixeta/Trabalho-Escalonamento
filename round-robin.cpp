@@ -4,17 +4,48 @@ int min(int a, int b) {
     return (a < b) ? a : b;
 }
 
+int lerNumeroProcessos() {
+    int n;
+    do {
+        printf("Numero de Processos: ");
+        scanf("%d", &n);
+        if (n <= 0) {
+            printf("Numero de processos invalido. Tente novamente.\n");
+        }
+    } while (n <= 0);
+    return n;
+}
+
+int lerQuantum() {
+    int quantum;
+    do {
+        printf("Parcela do Quantum: ");
+        scanf("%d", &quantum);
+        if (quantum <= 0) {
+            printf("Quantum invalido. Tente novamente.\n");
+        }
+    } while (quantum <= 0);
+    return quantum;
+}
+
 void lerProcessoTempoExecucao(int processoTemposExecucao[], int n) {
     for (int i = 0; i < n; i++) {
-        printf("Processo %d: ", i + 1);
-        scanf("%d", &processoTemposExecucao[i]);
+        int tempo;
+        do {
+            printf("Processo %d - Tempo de Execucao: ", i + 1);
+            scanf("%d", &tempo);
+            if (tempo <= 0) {
+                printf("Tempo invalido. Tente novamente.\n");
+            }
+        } while (tempo <= 0);
+        processoTemposExecucao[i] = tempo;
     }
 }
 
 void executarRoundRobin(int processoTemposExecucao[], int n, int quantum) {
     int processosRestantes = n;
     int tempoAnterior = 0;
-    int i = 0;                  // Índice do processo que acontecerá o rodízio (Round).
+    int i = 0;
 
     printf("\nTempo Atual\tProcesso\tTempo Executado\tTempo Restante\n");
 
@@ -33,39 +64,22 @@ void executarRoundRobin(int processoTemposExecucao[], int n, int quantum) {
                    tempoExecucao,
                    processoTemposExecucao[i]);
 
-            // Decrementar a variável de processos restantes quanto terminar para não entrar no próximo while.
             if (processoTemposExecucao[i] == 0) {
                 processosRestantes--;
             }
         }
 
-        // Isso faz com que o indice do processo (no caso "i") retorne para o valor "0" quando chegar ao valor "n".
-        // Trazendo a ideia do "Round" (rodízio).
         i = (i + 1) % n;
     }
 }
 
 int main() {
-    int n;
-    printf("Numero de Processos: ");
-    scanf("%d", &n);
-
-    if (n <= 0) {
-        printf("Numero de processos invalido.\n");
-        return 1;
-    }
+    int n = lerNumeroProcessos();
 
     int processoTemposExecucao[n];
     lerProcessoTempoExecucao(processoTemposExecucao, n);
 
-    int quantum;
-    printf("Parcela do Quantum: ");
-    scanf("%d", &quantum);
-
-    if (quantum <= 0) {
-        printf("Quantum invalido.\n");
-        return 1;
-    }
+    int quantum = lerQuantum();
 
     executarRoundRobin(processoTemposExecucao, n, quantum);
 
