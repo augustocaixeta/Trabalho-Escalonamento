@@ -72,10 +72,9 @@ int main() {
         tempo++;
 
         if (processos[menor].restante == 0) {
-            completo++;
-            int fim = tempo;
-            processos[menor].tempoTurnaround = fim - processos[menor].chegada;
+            processos[menor].tempoTurnaround = tempo - processos[menor].chegada; // Fim
             processos[menor].tempoEspera = processos[menor].tempoTurnaround - processos[menor].duracao;
+            completo++;
         }
     }
 
