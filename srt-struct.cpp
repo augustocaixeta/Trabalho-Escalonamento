@@ -33,15 +33,17 @@ int main() {
     int tempo = 0, completo = 0;
 
     for (int i = 0; i < n; i++) {
+    	printf("\n");
         printf("Digite o nome do processo %d: ", i + 1);
         scanf("%s", processos[i].nome);
-
+	
         printf("Digite o tempo de chegada do processo %d: ", i + 1);
         scanf("%d", &processos[i].chegada);
-
+		
         printf("Digite o tempo de duracao do processo %d: ", i + 1);
         scanf("%d", &processos[i].duracao);
-
+		printf("\n");
+		
         processos[i].restante = processos[i].duracao;
         processos[i].tempoEspera = 0;
         processos[i].tempoTurnaround = 0;
@@ -95,8 +97,8 @@ int main() {
         somaTurnaround += processos[i].tempoTurnaround;
     }
 
-    printf("\nMédia de tempo de espera: %.2f\n", (float) somaEspera / n);
-    printf("Média de turnaround: %.2f\n", (float) somaTurnaround / n);
+    printf("\nMedia de tempo de espera: %.2f\n", (float) somaEspera / n);
+    printf("Media de turnaround: %.2f\n", (float) somaTurnaround / n);
 
     return 0;
 }
