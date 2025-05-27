@@ -5,7 +5,6 @@
 #define MAX_PROCESSOS 10
 #define MAX_NOME 10
 
-// Definição da estrutura para armazenar os dados dos processos
 struct Processo {
     char nome[MAX_NOME];
     int chegada;
@@ -33,7 +32,6 @@ int main() {
     Processo processos[MAX_PROCESSOS];
     int tempo = 0, completo = 0;
 
-    // Entrada dos dados dos processos
     for (int i = 0; i < n; i++) {
         printf("Digite o nome do processo %d: ", i + 1);
         scanf("%s", processos[i].nome);
@@ -52,7 +50,6 @@ int main() {
     // Ordenar os processos pelo tempo de chegada
     qsort(processos, n, sizeof(Processo), compararChegada);
 
-    // Execução dos processos
     printf("\nLinha do Tempo:\n");
     while (completo < n) {
         int menor = -1;
@@ -66,7 +63,6 @@ int main() {
         }
 
         if (menor == -1) {
-            printf("- ");
             tempo++;
             continue;
         }
@@ -85,8 +81,8 @@ int main() {
 
     printf("\n");
 
-    // Exibição dos resultados
-    int somaEspera = 0, somaTurnaround = 0;
+    int somaEspera = 0;
+    int somaTurnaround = 0;
     printf("\nProcesso\tChegada\tDuracao\tEspera\tTurnaround\n");
     for (int i = 0; i < n; i++) {
         printf("%s\t\t%d\t\t%d\t\t%d\t%d\n",
