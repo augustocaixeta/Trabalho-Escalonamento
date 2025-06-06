@@ -62,6 +62,32 @@ void executarRoundRobin(int chegada[], int execucao[], int n, int quantum) {
     while (concluidos < n) {
         pronto = 0;
 
+        /**
+         * Problema: o escalonamento está sendo feito com base na rotação circular
+         * a partir do índice 'i', que representa o último processo executado.
+         * Isso faz com que o próximo processo escolhido não seja necessariamente
+         * o que chegou primeiro, mas sim o próximo na ordem circular que estiver pronto.
+         *
+         * Exemplo de erro:
+         * Suponha os processos:
+         *  P1 (chegada = 1, execução = 3)
+         *  P2 (chegada = 0, execução = 4)
+         *  P3 (chegada = 2, execução = 5)
+         *
+         * No tempo 0, P2 é executado. i = 1 (índice de P2).
+         * No tempo 2, a rotação começa de i+1, ou seja: P3, P1, P2
+         * (pid = (i + tentativas) % n).
+         *
+         * Nesse momento, tanto P1 (chegada = 1) quanto P3 (chegada = 2) estão prontos.
+         * No entanto, como a rotação começa de P3, ele é escolhido primeiro,
+         * mesmo que P1 tenha chegado antes.
+         *
+         * Isso ocorre porque a seleção não reavalia a ordem de chegada a cada rodada,
+         * apenas continua ciclicamente a partir do último processo executado.
+         *
+         * Correção: Manter uma fila de prontos ou sempre percorrer a lista
+         * completa dos processos, respeitando a ordem de chegada (e nome, se empate).
+         */
         for (int tentativas = 0; tentativas < n; tentativas++) {
             int pid = (i + tentativas) % n;
 
