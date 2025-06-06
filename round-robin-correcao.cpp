@@ -10,7 +10,6 @@ struct Processo {
     int chegada;
     int execucao;
     int restante;
-    int finalizado;
 
     void lerTempos() {
         printf("Nome do processo (ex: P1): ");
@@ -23,8 +22,6 @@ struct Processo {
         scanf("%d", &execucao);
 
         restante = execucao;
-        finalizado = 0;
-
         printf("\n");
     }
 };
@@ -34,11 +31,12 @@ int min(int a, int b) {
 }
 
 int compararProcessos(const void* a, const void* b) {
-    Processo* p1 = (Processo*)a;
-    Processo* p2 = (Processo*)b;
+    Processo* p1 = (Processo*) a;
+    Processo* p2 = (Processo*) b;
 
-    if (p1->chegada != p2->chegada)
+    if (p1->chegada != p2->chegada) {
         return p1->chegada - p2->chegada;
+    }
 
     return strcmp(p1->nome, p2->nome);
 }
@@ -70,7 +68,7 @@ void roundRobin(Processo processos[], int n, int quantum) {
             if (processos[i].chegada <= tempo && processos[i].restante > 0) {
                 int exec = min(quantum, processos[i].restante);
 
-                printf("%d-%d\t%s\tExec: %d\tRestante: %d\n",
+                printf("%d-%d\t%s\tExecucao: %d\tRestante: %d\n",
                        tempo, tempo + exec,
                        processos[i].nome,
                        exec,
@@ -80,7 +78,6 @@ void roundRobin(Processo processos[], int n, int quantum) {
                 processos[i].restante -= exec;
 
                 if (processos[i].restante == 0) {
-                    processos[i].finalizado = 1;
                     concluidos++;
                 }
 
